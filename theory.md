@@ -27,19 +27,22 @@ hamiltonian = kinetic_energy + potential_energy
 
 While it would be interesting to see what we can do with this quantity, we should switch back to quantum mechanics first.
 
-It is easy to imagine kinetic and potential energy as sums of individual particle positions and speeds, but in quantum mechanics we don't have particles. We have a wave function.
+It is easy to imagine kinetic and potential energy as sums of individual particle positions and speeds, but in quantum mechanics we don't have particles. We have a wave function. So we need an operator to operate on the wave function to yield a meaningful potential.
 
 For a single particle, the Hamiltonian operator should be:
 ```
-potential_energy = np.zeros((n, n, n), dtype=float)  # we can choose any values, but the shape must match the wave function
-def hamiltonian(psi):
-    return kinetic_energy(psi) + potential_energy
-
 # m: mass of particle
 # h_bar: 6.62607015e-34 / (2 * math.pi)
 def kinetic_energy(psi):
     g_psi = np.gradient(psi)
     return -(h_bar ** 2 / (2 * m)) * g_psi.dot(g_psi)
+
+def potential_energy(psi):
+    v = np.zeros((n, n, n), dtype=float)  # we can choose any values, even vary with time, but the shape must match the wave function
+    return v * psi
+
+def hamiltonian(psi):
+    return kinetic_energy(psi) + potential_energy(psi)
 ```
 
 If the system behaves how we want it to, then we know we chose the correct Hamiltonian operator.
@@ -48,5 +51,6 @@ If the system behaves how we want it to, then we know we chose the correct Hamil
 The remaining relation is quite simple. We need to calculate the time-derivative, so we'll do a small rearrangement.
 
 ```
-d_psi = hamiltonian(psi) / (1j * h_bar)
+def schrodinger(psi):
+    return hamiltonian(psi) / (1j * h_bar)
 ```
