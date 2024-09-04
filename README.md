@@ -9,6 +9,6 @@ This project assumes familiarity with:
 - numpy
 - partial derivatives
 - complex numbers
-- vector spaces
+- vector fields
 
 Inspired by [this video](https://www.youtube.com/watch?v=MXs_vkc8hpY).

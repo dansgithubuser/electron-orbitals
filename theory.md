@@ -1,7 +1,7 @@
 # Schrodinger's Equation
-Schrodiner's equation comes in a few forms. We're interested in the "time-dependent" form, which is the general form. We'll split this equation into three parts:
+Schrodinger's equation comes in a few forms. We're interested in the "time-dependent" form, which is the general form. We'll split this equation into three parts:
 - a wave function
-- a Hamiltonian
+- a Hamiltonian operator
 - how those things relate (the rest)
 
 ## Wave Function
@@ -15,13 +15,38 @@ The wave function serves as the state of our system. We will use the rest of Sch
 
 Given that we are describing a finite space, and that Schrodinger's equation doesn't know that, we need to come up with a nice way to confine predictions to the space. We could decide that everything outside the space has infinite potential, but it's not clear how to actually implement that. Rather, let's say the result we're desiring from such an idea: the wave function should be confined to the finite space. So let's add a correction step in our evolution: normalize the wave function. This is basically saying "disregard any interactions with the space outside". At each step, we reset the state to exist exactly inside the finite space.
 
-## Hamiltonian
+## Hamiltonian operator
+We do not assume familiarity with Hamiltonian mechanics, so we'll explore enough to feel confident our eventual computation is true.
 
+We'll bounce to classical mechanics, which is what Hamiltonian mechanics was made for. In classical mechanics, we need to choose a Hamiltonian (not an operator) for our system. A Hamiltonian can be figured from something called a Lagrangian, but Lagrangians are just siblings of Hamiltonians and offer no insights about how to pick them.
+
+Rather, in the same way we guess that `F=ma` describes how a mass behaves when a force is applied, so too must we guess a Hamiltonian for any system we hope to analyze. However, we should be able to verify that our choice is correct by experiment. We are also lucky that people before us have guessed a bunch of Hamiltonians, and we can pick one from a list to try. For example, the Hamiltonian for a variety of systems is:
+```
+hamiltonian = kinetic_energy + potential_energy
+```
+
+While it would be interesting to see what we can do with this quantity, we should switch back to quantum mechanics first.
+
+It is easy to imagine kinetic and potential energy as sums of individual particle positions and speeds, but in quantum mechanics we don't have particles. We have a wave function.
+
+For a single particle, the Hamiltonian operator should be:
+```
+potential_energy = np.zeros((n, n, n), dtype=float)  # we can choose any values, but the shape must match the wave function
+def hamiltonian(psi):
+    return kinetic_energy(psi) + potential_energy
+
+# m: mass of particle
+# h_bar: 6.62607015e-34 / (2 * math.pi)
+def kinetic_energy(psi):
+    g_psi = np.gradient(psi)
+    return -(h_bar ** 2 / (2 * m)) * g_psi.dot(g_psi)
+```
+
+If the system behaves how we want it to, then we know we chose the correct Hamiltonian operator.
 
 ## The Rest
 The remaining relation is quite simple. We need to calculate the time-derivative, so we'll do a small rearrangement.
 
 ```
-h_bar = 6.62607015e-34 / (2 * math.pi)
-dpsi = hamiltonian(psi) / (1j * h_bar)
+d_psi = hamiltonian(psi) / (1j * h_bar)
 ```
