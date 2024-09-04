@@ -7,8 +7,7 @@ We reject the notion that "nobody understand quantum mechanics" and instead supp
 This project assumes familiarity with:
 - Python
 - numpy
-- partial derivatives
+- vector calculus
 - complex numbers
-- vector fields
 
 Inspired by [this video](https://www.youtube.com/watch?v=MXs_vkc8hpY).

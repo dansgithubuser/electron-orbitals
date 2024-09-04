@@ -34,8 +34,7 @@ For a single particle, the Hamiltonian operator should be:
 # m: mass of particle
 # h_bar: 6.62607015e-34 / (2 * math.pi)
 def kinetic_energy(psi):
-    g_psi = np.gradient(psi)
-    return -(h_bar ** 2 / (2 * m)) * g_psi.dot(g_psi)
+    return -(h_bar ** 2 / (2 * m)) * laplacian(psi)
 
 def potential_energy(psi):
     v = np.zeros((n, n, n), dtype=float)  # we can choose any values, even vary with time, but the shape must match the wave function
