@@ -53,3 +53,6 @@ The remaining relation is quite simple. We need to calculate the time-derivative
 def schrodinger(psi):
     return hamiltonian(psi) / (1j * h_bar)
 ```
+
+# Avoiding Floating-point Limitations
+In SI units, `h_bar` and `m` are very small. Yet we seek probabilities between 0 and 1. With floating-point computation, adding `1e-30` to `1` yields `1`. To avoid this, we look for a way for `h_bar` and `m` to be close to 1. `h_bar`'s dimension is `mass * length * length / time`. So if we decide to measure mass in `h_bar kg`, then `h_bar_compute` is `1` and compute masses are `mass_in_kg / h_bar`.

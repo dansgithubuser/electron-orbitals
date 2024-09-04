@@ -5,6 +5,9 @@ import math
 h_bar = 6.62607015e-34 / (2 * math.pi)
 m_e = 9.1093837139e-31
 
+def mass_to_compute_units(m):
+    return m / h_bar
+
 def laplacian(f):
     grad = np.gradient(f)
     if type(grad) != tuple: grad = (grad,)
@@ -17,7 +20,7 @@ def potential_energy(psi, v):
     return v * psi
 
 def kinetic_energy(psi, m):
-    return -(h_bar ** 2 / (2 * m)) * laplacian(psi)
+    return -(1 / (2 * m)) * laplacian(psi)
 
 def hamiltonian_single_particle(psi, v, m):
     def hamiltonian(psi):
@@ -25,7 +28,7 @@ def hamiltonian_single_particle(psi, v, m):
     return hamiltonian
 
 def schrodinger(psi, hamiltonian):
-    return hamiltonian(psi) / (1j * h_bar)
+    return hamiltonian(psi) / 1j
 
 def probability(psi):
     return np.absolute(psi) ** 2
