@@ -6,12 +6,12 @@ n = 100
 shape = (n,)
 
 v = np.zeros(shape, dtype=float)
-v[n//5:4*n//5] = -1
+v[n//10:9*n//10] = -2
 
 psi = np.zeros(shape, dtype=complex)
-psi[3*n//5:4*n//5] = 1
+psi[3*n//4] = 1
 
-hamiltonian = hamiltonian_single_particle(psi, v, 1)
+hamiltonian = hamiltonian_single_particle(psi, v, 1, 1)
 
 plot = dpc.Plot(primitive=dpc.p.LineComplexY())
 
