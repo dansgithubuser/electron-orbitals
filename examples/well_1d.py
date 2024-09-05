@@ -9,7 +9,7 @@ v = np.zeros(shape, dtype=float)
 v[n//5:4*n//5] = -1
 
 psi = np.zeros(shape, dtype=complex)
-psi[3*n//4] = 1
+psi[3*n//5:4*n//5] = 1
 
 hamiltonian = hamiltonian_single_particle(psi, v, 1)
 
@@ -21,7 +21,8 @@ class Updater:
 
     def __call__(self, dt):
         plot.clear()
-        evolve(psi, hamiltonian, 1)
+        evolve(psi, hamiltonian, 0.1)
+        plot.plot(probability(psi))
         plot.plot(psi)
         plot.plot(v)
 
