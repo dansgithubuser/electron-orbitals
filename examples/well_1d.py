@@ -2,6 +2,9 @@ import dansplotcore as dpc
 
 from schrodinger import *
 
+import os
+import math
+
 n = 100
 shape = (n,)
 
@@ -10,6 +13,9 @@ v[n//10:9*n//10] = -2
 
 psi = np.zeros(shape, dtype=complex)
 psi[3*n//4] = 1
+
+if h := os.environ.get('HARMONIC'):
+    psi = np.sin(np.linspace(0, int(h)*math.pi, n, dtype=complex))
 
 hamiltonian = hamiltonian_single_particle(psi, v, 1, 1)
 
