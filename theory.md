@@ -37,7 +37,12 @@ def kinetic_energy(psi):
     return -(h_bar ** 2 / (2 * m)) * laplacian(psi)
 
 def potential_energy(psi):
-    v = np.zeros((n, n, n), dtype=float)  # we can choose any values, even vary with time, but the shape must match the wave function
+    v = np.zeros((n, n, n), dtype=float)
+    # the interior of v can have any value
+    # v can vary with time
+    # the boundary must be 0, e.g. v[0], v[n-1], v[:0], v[:n-1], v[::0], v[::n-1] should all be 0
+    # for simplicity, v is real, but its complex phase does not matter
+    # this means positive and negative potentials act the same
     return v * psi
 
 def hamiltonian(psi):
