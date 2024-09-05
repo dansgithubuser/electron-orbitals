@@ -13,9 +13,16 @@ psi[3*n//4] = 1
 
 hamiltonian = hamiltonian_single_particle(psi, v, 1)
 
-while True:
-    plot = dpc.Plot(primitive=dpc.p.LineComplexY())
-    plot.plot(psi)
-    plot.plot(v)
-    plot.show()
-    evolve(psi, hamiltonian, 1)
+plot = dpc.Plot(primitive=dpc.p.LineComplexY())
+
+class Updater:
+    def __init__(self):
+        self(0)
+
+    def __call__(self, dt):
+        plot.clear()
+        evolve(psi, hamiltonian, 1)
+        plot.plot(psi)
+        plot.plot(v)
+
+plot.show(update=Updater())
