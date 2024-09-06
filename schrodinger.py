@@ -1,4 +1,5 @@
 import numpy as np
+from scipy.ndimage import laplace
 
 import math
 
@@ -9,24 +10,7 @@ def mass_to_compute_units(m):
     return m / h_bar
 
 def laplacian(f, dx):
-    # let x = i * dx, so f[i] = f(x)
-    # 1st derivative estimation: df(x) = (f(x+dx/2) - f(x-dx/2)) / dx
-    # 2nd derivative estimation: d2f(x) = (df(x+dx/2) - df(x-dx/2)) / dx
-    # = ((f(x+dx/2+dx/2) - f(x+dx/2-dx/2)) / dx - (f(x-dx/2+dx/2) - f(x-dx/2-dx/2)) / dx) / dx
-    # = ((f(x+dx) - f(x)) / dx - (f(x) - f(x-dx)) / dx) / dx
-    # = ((f(x+dx) - f(x)) - (f(x) - f(x-dx))) / dx ** 2
-    # = (f(x+dx) - f(x) - f(x) + f(x-dx)) / dx ** 2
-    # = (f(x+dx) - 2*f(x) + f(x-dx)) / dx ** 2
-    kernel = np.array([1, -2, 1])
-    n = len(f.shape)
-    def kernel_shape(i):
-        s = np.ones(n, dtype=int)
-        s[i] = 3
-        return s
-    d2 = np.zeros_like(f)
-    for i in range(n):
-        d2 += np.convolve(f, kernel.reshape(kernel_shape(i)), mode='same')
-    return d2 / dx ** 2
+    return laplace(f) / dx ** 2
 
 def potential_energy(psi, v):
     return v * psi
