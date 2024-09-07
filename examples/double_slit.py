@@ -31,11 +31,10 @@ plot = dpc.Plot(transform=dpc.t.Colors([
     dpc.t.Color(1.0, 0.0, 0.0, 0.5),
     dpc.t.Color(0.0, 0.0, 1.0, 0.5),
 ]))
+plot.plot_2d(probability(psi))
+plot.plot_2d(v)
 
 class Updater:
-    def __init__(self):
-        self(0)
-
     def __call__(self, dt):
         for _ in range(100):
             for x in range(3, 6):
@@ -45,10 +44,13 @@ class Updater:
                     k = 0.25
                     psi[x, y] = 1e-2 * np.exp(-r ** 2 / 1e2) * np.exp(-1j * (k * z))
             evolve(psi, hamiltonian, 0.01)
-        plot.clear()
-        plot.plot(probability(psi))
-        plot.plot_2d(v)
-        #plot.plot_2d(abs(np.real(psi)))
-        #plot.plot_2d(abs(np.imag(psi)))
+        i = 0
+        p = probability(psi)
+        z_max = np.max(p)
+        for y, row in enumerate(p):
+            for x, z in enumerate(row):
+                w = z / z_max
+                i = plot.buffer.recolor(i, 6, w, w, w, 1.0)
+        plot.buffer.prep('dynamic')
 
-plot.show(update=Updater())
+plot.show(update=Updater(), update_reconstruct=False)
