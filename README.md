@@ -4,6 +4,14 @@ We are not interested to simplify in traditional ways. We are not here to avoid 
 
 We reject the notion that "nobody understands quantum mechanics" and instead suppose that the pedagogy around quantum mechanics is underdeveloped. And start to fill that void.
 
+Suggested reading order:
+- `theory.md` and `schrodinger.py`
+- `examples/well_1d.py`
+- `examples/packet_1d.py`
+- `examples/packet_2d.py`
+- `examples/double_slit.py`
+- `examples/packet_3d.py`
+
 This project assumes familiarity with:
 - Python
 - numpy
