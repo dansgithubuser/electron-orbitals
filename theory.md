@@ -31,10 +31,11 @@ It is easy to imagine kinetic and potential energy as sums of individual particl
 
 For a single particle, the Hamiltonian operator should be:
 ```
-# m: mass of particle
 # h_bar: 6.62607015e-34 / (2 * math.pi)
+# m: mass of particle
+# dx: element length
 def kinetic_energy(psi):
-    return -(h_bar ** 2 / (2 * m)) * laplacian(psi)
+    return -(h_bar ** 2 / (2 * m)) * laplace(psi) / dx ** 2
 
 def potential_energy(psi):
     v = np.zeros((n, n, n), dtype=float)
@@ -60,4 +61,4 @@ def schrodinger(psi):
 ```
 
 # Avoiding Floating-point Limitations
-In SI units, `h_bar` and `m` are very small. Yet we seek probabilities between 0 and 1. With floating-point computation, adding `1e-30` to `1` yields `1`. To avoid this, we look for a way for `h_bar` and `m` to be close to 1. `h_bar`'s dimension is `mass * length * length / time`. So if we decide to measure mass in `h_bar kg`, then `h_bar_compute` is `1` and compute masses are `mass_in_kg / h_bar`.
+In SI units, `h_bar` is very small, and for an atom, `1 / (m * dx ** 2)` is very very big. Yet we seek probabilities between 0 and 1. With floating-point computation, adding `1e-30` to `1` yields `1`. To avoid these scale problems, we look for a way for `h_bar` and `1 / (m * dx ** 2)` to be close to 1. We can use "Planck units" to accomplish this.

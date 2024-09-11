@@ -1,6 +1,6 @@
-import dansplotcore as dpc
-
 from schrodinger import *
+
+import dansplotcore as dpc
 
 import cmath
 import math
@@ -29,12 +29,15 @@ plot = dpc.Plot()
 plot.plot_2d(probability(psi))
 
 class Updater:
+    def __init__(self):
+        self.psi = psi
+
     def __call__(self, dt):
         for _ in range(100):
-            evolve(psi, hamiltonian, 0.01)
+            self.psi = evolve(self.psi, hamiltonian, 0.01)
         i = 0
-        z_max = np.max(np.abs(psi))
-        for y, row in enumerate(psi):
+        z_max = np.max(np.abs(self.psi))
+        for y, row in enumerate(self.psi):
             for x, z in enumerate(row):
                 a = abs(z) / z_max
                 phase = cmath.phase(z)

@@ -1,6 +1,6 @@
-import dansplotcore as dpc
-
 from schrodinger import *
+
+import dansplotcore as dpc
 
 n = 500
 shape = (n,)
@@ -23,13 +23,14 @@ plot = dpc.Plot(primitive=dpc.p.LineComplexY())
 
 class Updater:
     def __init__(self):
+        self.psi = psi
         self(0)
 
     def __call__(self, dt):
         plot.clear()
         for _ in range(1000):
-            evolve(psi, hamiltonian, 0.001)
-        plot.plot(probability(psi))
-        plot.plot(psi)
+            self.psi = evolve(self.psi, hamiltonian, 0.001)
+        plot.plot(probability(self.psi))
+        plot.plot(self.psi)
 
 plot.show(update=Updater())
