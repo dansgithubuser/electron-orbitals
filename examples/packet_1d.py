@@ -6,6 +6,11 @@ n = 500
 shape = (n,)
 
 v = np.zeros(shape, dtype=float)
+#v[250:] = 1  # reflect
+#v[250:] = 0.1  # partial reflect, lose energy
+#v[250:] = -0.1  # partial reflect, gain energy
+#v[250:] = -1  # partial reflect, gain energy
+#v[250:] = -2  # looks like reflect, but we're gaining too much energy to simulate accurately (try reducing momentum or increasing space resolution)
 
 # Gaussian wave packet with momentum
 psi = np.zeros(shape, dtype=complex)

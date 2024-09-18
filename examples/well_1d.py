@@ -17,7 +17,7 @@ psi = np.zeros(shape, dtype=complex)
 psi[3*n//4] = 1
 
 if h:
-    psi = np.sin(np.linspace(0, int(h)*math.pi, n, dtype=complex))
+    psi[n//10:9*n//10] = np.sin(np.linspace(0, int(h)*math.pi, 8*n//10, dtype=complex))
 
 hamiltonian = hamiltonian_single_particle(psi, v, 1, 1)
 
@@ -30,7 +30,8 @@ class Updater:
 
     def __call__(self, dt):
         plot.clear()
-        self.psi = evolve(self.psi, hamiltonian, 0.1)
+        for _ in range(1000):
+            self.psi = evolve(self.psi, hamiltonian, 0.001)
         plot.plot(probability(self.psi))
         plot.plot(self.psi)
         plot.plot(v)

@@ -6,9 +6,22 @@ import math
 from constants import a_0_compute
 from schrodinger import normalize
 
+#===== helpers =====#
 def fac(x):
     return math.factorial(x)
 
+#===== packet =====#
+def gaussian_wave_packet(shape, dx, width, momentum):
+    psi = np.zeros(shape, dtype=complex)
+    c = (np.array(shape) - np.ones(len(shape))) / 2
+    it = np.nditer(psi, flags=['multi_index'])
+    for _ in it:
+        r = (np.array(it.multi_index) - c) * dx
+        r2 = np.sum(r ** 2)
+        psi[it.multi_index] = np.exp(-r2 / width ** 2 + 1j * r.dot(momentum))
+    return normalize(psi)
+
+#===== hydrogen =====#
 def hydrogen_calculate_a_k(k, n, l):
     if k == 0: return 1  # we normalize at the end anyhow
     return (k + l - n) / (k * (k + 2 * l + 1)) * hydrogen_calculate_a_k(k-1, n, l)

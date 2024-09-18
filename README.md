@@ -23,6 +23,7 @@ Suggested order:
     - run `axis=x n=2 l=1 m=1 ./run_example.py examples/orbital.py`
     - run `tomograph=1 n=2 l=1 m=1 ./run_example.py examples/orbital.py`
     - run `tomograph=1 axis=x n=2 l=1 m=1 ./run_example.py examples/orbital.py`
+- run & read `./run_example.py examples/collide_1d.py`
 
 This project assumes familiarity with:
 - Python
