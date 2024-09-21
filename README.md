@@ -4,6 +4,12 @@ We are not interested to simplify in traditional ways. We are not here to avoid 
 
 We reject the notion that "nobody understands quantum mechanics" and instead suppose that the pedagogy around quantum mechanics is underdeveloped. And start to fill that void.
 
+This project assumes familiarity with:
+- Python
+- numpy
+- vector calculus
+- complex numbers
+
 Suggested order:
 - read `theory.md` and `schrodinger.py`
 - (run `pip install -r requirements.txt`)
@@ -24,11 +30,4 @@ Suggested order:
     - run `tomograph=1 n=2 l=1 m=1 ./run_example.py examples/orbital.py`
     - run `tomograph=1 axis=x n=2 l=1 m=1 ./run_example.py examples/orbital.py`
 - run & read `./run_example.py examples/collide_1d.py`
-
-This project assumes familiarity with:
-- Python
-- numpy
-- vector calculus
-- complex numbers
-
-Inspired by [this video](https://www.youtube.com/watch?v=MXs_vkc8hpY).
+- read `conclusions.md
